@@ -1,0 +1,22 @@
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+  inStock: boolean;
+};
+
+const product1: Product = {
+  id: 1,
+  name: 'Манга Темный Дворецский',
+  price: 3500,
+  inStock: true,
+};
+
+const cartItems: Product[] = [];
+
+function addToCart(product: Product): void {
+  cartItems.push(product);
+}
+
+addToCart(product1);
+console.log(cartItems);
