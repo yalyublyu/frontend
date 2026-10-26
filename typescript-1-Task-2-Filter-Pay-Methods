@@ -1,1 +1,61 @@
+type CardPayment = {
+  type: 'card';
+  cardNumber: string;
+  expiryDate: string;
+  cvv: string;
+};
 
+type CashPayment = {
+  type: 'cash';
+  deliveryAddress: string;
+  changeFrom: number;
+};
+
+type OnlinePayment = {
+  type: 'online';
+  walletId: string;
+  email: string;
+};
+
+type PaymentMethod = CardPayment | CashPayment | OnlinePayment;
+
+function isCardPayment(payment: PaymentMethod): payment is CardPayment {
+  return payment.type === 'card';
+}
+
+function isCashPayment(payment: PaymentMethod): payment is CashPayment {
+  return payment.type === 'cash';
+}
+
+function processPayment(payment: PaymentMethod): void {
+  if (isCardPayment(payment)) {
+    const last4 = payment.cardNumber.slice(-4);
+    
+    console.log(`Обработка карты: ****-****-****-${last4}`);
+    
+  } else if (isCashPayment(payment)) {
+    console.log(`Доставка по адресу: ${payment.deliveryAddress}. Нужна сдача с ${payment.changeFrom} руб.`);
+    
+  } else {
+    console.log(`Оплата через кошелёк ${payment.walletId}. Подтверждение отправлено на ${payment.email}`);
+  }
+}
+
+processPayment({
+  type: 'card',
+  cardNumber: '888888888888',
+  expiryDate: '12/35',
+  cvv: '888',
+});
+
+processPayment({
+  type: 'cash',
+  deliveryAddress: 'ул. 8 марта, д. 10',
+  changeFrom: 1000,
+});
+
+processPayment({
+  type: 'online',
+  walletId: 'kivy999',
+  email: 'anisya@gmail.com',
+});
